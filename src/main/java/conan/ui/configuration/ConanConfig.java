@@ -18,6 +18,7 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import conan.commands.ConfigInstall;
+import conan.commands.ConfigInstallFromGit;
 import conan.persistency.PersistencyUtils;
 import conan.persistency.settings.ConanProjectSettings;
 import conan.utils.Utils;
@@ -45,6 +46,7 @@ public class ConanConfig implements Configurable, Configurable.NoScroll {
     private JPanel rootPanel;
 
     private JBTextField configInstallSource;
+    private JCheckBox configInstallForceGit;
     private JButton installConfigButton;
     private JLabel configInstallRes;
     private JBTextField installArgs;
@@ -83,7 +85,7 @@ public class ConanConfig implements Configurable, Configurable.NoScroll {
                 setConfigInstallRes("Invalid URL or path", false);
                 return;
             }
-            runConfigInstall(source);
+            runConfigInstall(source, configInstallForceGit.isSelected());
         });
         configInstallSource.getEmptyText().setText("Git repository, local folder or ZIP file (local or http)");
         installArgs.getEmptyText().setText("Arguments other than '--if', '--pr' and '--update'");
@@ -110,7 +112,7 @@ public class ConanConfig implements Configurable, Configurable.NoScroll {
      *
      * @param source the source of the Conan configuration.
      */
-    private void runConfigInstall(String source) {
+    private void runConfigInstall(String source, boolean force_git) {
         OutputListener processListener = new OutputListener() {
             @Override
             public void processTerminated(@NotNull ProcessEvent processEvent) {
@@ -123,7 +125,14 @@ public class ConanConfig implements Configurable, Configurable.NoScroll {
                 }
             }
         };
-        new ConfigInstall(this.project, processListener, source).run();
+        if (force_git)
+        {
+            new ConfigInstallFromGit(this.project, processListener, source).run();
+        }
+        else
+        {
+            new ConfigInstall(this.project, processListener, source).run();
+        }
     }
 
     private void setConfigInstallRes(String results, boolean isSuccess) {

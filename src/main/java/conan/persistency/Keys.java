@@ -9,5 +9,6 @@ import com.intellij.ide.util.PropertiesComponent;
  */
 public class Keys {
     public static final String CONFIG_INSTALL_SOURCE = "conan.config.install.url";
+    public static final String CONFIG_INSTALL_FORCE_GIT = "conan.config.install.forceGit";
     public static final String CONFIG_CONAN_EXE_PATH = "conan.path";
 }
