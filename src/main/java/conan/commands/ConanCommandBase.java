@@ -38,7 +38,7 @@ public class ConanCommandBase {
     Project project;
     GeneralCommandLine args;
 
-    protected ConanCommandBase(Project project, String... args) {
+    protected ConanCommandBase(@Nullable Project project, String... args) {
         this.project = project;
 
         ConanProjectSettings conanProjectSettings = ConanProjectSettings.getInstance(project);

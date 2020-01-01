@@ -6,6 +6,7 @@ import conan.profiles.CMakeProfile;
 import conan.profiles.ConanProfile;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 
@@ -20,7 +21,7 @@ import java.util.Arrays;
  */
 public class Install extends ConanCommandBase {
 
-    public Install(Project project, CMakeProfile cMakeProfile, ConanProfile conanProfile, boolean update) {
+    public Install(@Nullable Project project, CMakeProfile cMakeProfile, ConanProfile conanProfile, boolean update) {
         super(project, "install", project.getBasePath(), "-if=" + cMakeProfile.getTargetDir(), "-pr=" + conanProfile.getName());
         addArguments(project, update);
     }
