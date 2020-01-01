@@ -38,7 +38,7 @@ public class ConanCommandBase {
     Project project;
     GeneralCommandLine args;
 
-    protected ConanCommandBase(Project project, String... args) {
+    protected ConanCommandBase(@Nullable Project project, String... args) {
         this.project = project;
 
         ConanProjectSettings conanProjectSettings = ConanProjectSettings.getInstance(project);
@@ -69,12 +69,15 @@ public class ConanCommandBase {
         this.run(task);
     }
 
-    public void run_sync(@Nullable ProcessListener processListener) {
+    public SyncConanTask getSyncTask(@Nullable ProcessListener processListener) {
         if (processListener == null) {
             processListener = new ProcessAdapter() {};
         }
-        SyncConanTask task = new SyncConanTask(this.project, processListener, this.args);
-        this.run(task);
+        return new SyncConanTask(this.project, processListener, this.args);
+    }
+
+    public void run_sync(@Nullable ProcessListener processListener) {
+        this.run(getSyncTask(processListener));
     }
 
     public void run_cmake_environment(@NotNull CMakeRunnerStep.Parameters parameters) {

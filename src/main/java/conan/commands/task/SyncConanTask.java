@@ -30,7 +30,7 @@ public class SyncConanTask extends Task.Modal {
     private GeneralCommandLine args;
     private ProcessListener processListener;
 
-    public SyncConanTask(Project project, @Nullable ProcessListener processListener, GeneralCommandLine args) {
+    public SyncConanTask(@Nullable Project project, @Nullable ProcessListener processListener, GeneralCommandLine args) {
         super(project, "Running Conan...", true);
         this.processListener = processListener;
         this.args = args;
