@@ -10,9 +10,11 @@ plugins {
 }
 
 intellij {
-    localPath = '.gradle/ide/clion-' + clionVersion
+    type = "CL"
+    version = "2020.3"
     pluginName = 'Conan'
     updateSinceUntilBuild = false // Disables updating since-build attribute in plugin.xml
+    setPlugins("com.intellij.clion", "com.intellij.cidr.base")
 }
 
 repositories {
